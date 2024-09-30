@@ -1,29 +1,89 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace HeatCalcServer.Domain
+﻿namespace HeatCalcServer.Domain
 {
     public class Section
     {
         public Guid Id { get; set; }
-        //номер секции в пределах дома
+        /// <summary>
+        /// номер секции в пределах дома
+        /// </summary>
         public int Number { get; set; }
-        //Общая площадь квартир секции 2-24 этажа
-        public decimal TotalAreaOfApartmentsBelow { get; set; }
-        //Общая площадь квартир секции с 25 этажа и выше
-        public decimal TotalAreaOfApartmentsAbove { get; set; }
-        //площадь подвала
-        public decimal TotalAreaOfBasement { get; set; }
-        //площадь технического пространства
-        public decimal TotalAreaOfTechnicalSpace { get; set; }
-        //Наличие ОДС/ЦПУ в секции
+        /// <summary>
+        /// Общая площадь квартир секции 2-24 этажа
+        /// </summary>
+        public double TotalAreaOfApartmentsBelow { get; set; }
+        /// <summary>
+        /// Общая площадь квартир секции с 25 этажа и выше
+        /// </summary>
+        public double TotalAreaOfApartmentsAbove { get; set; }
+        /// <summary>
+        /// площадь подвала
+        /// </summary>
+        public double TotalAreaOfBasement { get; set; }
+        /// <summary>
+        /// площадь технического пространства
+        /// </summary>
+        public double TotalAreaOfTechnicalSpace { get; set; }
+        /// <summary>
+        /// Наличие ОДС/ЦПУ в секции
+        /// </summary>
         public bool HasControlRoom { get; set; }
-        public decimal TotalAreaOfControlRoom { get; set; }
-        //центр обслуживания населения
+        /// <summary>
+        /// Общая площадь ОДС/ЦПУ
+        /// </summary>
+        public double TotalAreaOfControlRoom { get; set; }
+        /// <summary>
+        /// центр обслуживания населения
+        /// </summary>
         public bool HasServiceCenter { get; set; }
-        public decimal TotalAreaOfServiceCenter { get; set; }
-        //количество этажей
-        public int NumberOfFloors { get; set; }
-        //
+        public double TotalAreaOfServiceCenter { get; set; }
+        /// <summary>
+        /// количество этажей
+        /// </summary>
+        public int CountOfFloors { get; set; }
+        /// <summary>
+        /// номер нижнего пожарного отсека
+        /// </summary>
+        public int LowerFireCompartmentNumber { get; set; }
+        /// <summary>
+        /// количество этажей нижнего пожарного отсека
+        /// </summary>
+        public int CountOfFloorsOfTheLowerFireComaprtment { get; set; }
+        /// <summary>
+        /// промежуточный технический этаж
+        /// </summary>
+        public int IntermediateTechnicalFloorNumber { get; set; }
+        /// <summary>
+        /// номер верхнего пожарного отсека
+        /// </summary>
+        public int UpperFireCompartmentNumber { get; set; }
+        /// <summary>
+        /// количество этажей верхнего пожарного отсека
+        /// </summary>
+        public int CountOfFloorsOfTheUpperFireComaprtment { get; set; }
+        /// <summary>
+        /// количество коридоров типового этажа
+        /// </summary>
+        public int CountOfCorridorsTypicalFloor { get; set; }
+        /// <summary>
+        /// количество пожаробезопасных зон
+        /// </summary>
+        public int CountOfFireproofZone { get; set; }
+        public List<Corridor> Corridors { get; set; }
+        public List<Staircase> Staircases { get; set; }
+        public List<Elevator> Elevators { get; set; }
+
+        /// <summary>
+        /// номер пож.отсека, в котором расположен подвал секции
+        /// </summary>
+        public int BasementFireCompartmentNumber { get; set; }
+        /// <summary>
+        /// Насосная(в пож.отсеке секции)
+        /// </summary>
+        public bool HasPumpingStationInSectionFireComaprtment { get; set; }
+        /// <summary>
+        /// количество людей в подвале при отсутствии стоянки
+        /// </summary>
+        public int CountOfPeopleInShelter { get; set; }
 
     }
 }
