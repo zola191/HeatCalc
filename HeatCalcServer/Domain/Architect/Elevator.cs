@@ -1,6 +1,6 @@
 ﻿using HeatCalcServer.Enums;
 
-namespace HeatCalcServer.Domain
+namespace HeatCalcServer.Domain.Architect
 {
     public class Elevator
     {

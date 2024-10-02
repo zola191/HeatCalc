@@ -1,4 +1,4 @@
-﻿namespace HeatCalcServer.Domain
+﻿namespace HeatCalcServer.Domain.Architect
 {
     public class Architect
     {
@@ -26,7 +26,7 @@
         /// <summary>
         /// Наличие укрытия
         /// </summary>
-        public bool HasShelter {  get; set; }
+        public bool HasShelter { get; set; }
         public List<Section> Sections { get; set; }
 
         /// <summary>
@@ -50,5 +50,6 @@
         /// Деление паркинга на пожарные отсеки
         /// </summary>
         public List<Parking> Parkings { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
