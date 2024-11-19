@@ -1,6 +1,6 @@
-using HeatCalcServer.Data;
-using HeatCalcServer.Interfaces;
-using HeatCalcServer.Services;
+using HeatCalc.Data;
+using HeatCalc.Domain.Interfaces;
+using HeatCalc.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

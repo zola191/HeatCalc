@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeatCalcServer", "HeatCalcServer.csproj", "{9CBF9E4B-F73F-427C-85FA-2A7CF9EEAF77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeatCalcServer", "HeatCalcServer.csproj", "{9CBF9E4B-F73F-427C-85FA-2A7CF9EEAF77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeatCalc.Data", "..\HeatCalc.Data\HeatCalc.Data.csproj", "{24FBD0DE-1437-4555-9664-DE03EB73A865}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeatCalc.Domain", "..\HeatCalc.Domain\HeatCalc.Domain.csproj", "{BE2200E0-86CF-4520-B67E-14D64B09549C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{9CBF9E4B-F73F-427C-85FA-2A7CF9EEAF77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CBF9E4B-F73F-427C-85FA-2A7CF9EEAF77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CBF9E4B-F73F-427C-85FA-2A7CF9EEAF77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24FBD0DE-1437-4555-9664-DE03EB73A865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24FBD0DE-1437-4555-9664-DE03EB73A865}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24FBD0DE-1437-4555-9664-DE03EB73A865}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24FBD0DE-1437-4555-9664-DE03EB73A865}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE2200E0-86CF-4520-B67E-14D64B09549C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE2200E0-86CF-4520-B67E-14D64B09549C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE2200E0-86CF-4520-B67E-14D64B09549C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE2200E0-86CF-4520-B67E-14D64B09549C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,5 @@
-﻿using HeatCalcServer.Dto.Request;
-using HeatCalcServer.Interfaces;
+﻿using HeatCalc.Domain.Dto.Request.Archive;
+using HeatCalc.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HeatCalcServer.Controllers
@@ -15,9 +15,7 @@ namespace HeatCalcServer.Controllers
             this.architectService = architectService;
         }
 
-        // нужно ли разделять модельки на request и response
-
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> Create(ArchitectRequest request)
         {
             await architectService.CreateAsync(request);
@@ -32,7 +30,7 @@ namespace HeatCalcServer.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Create([FromRoute] Guid id, ArchitectRequest request)
+        public async Task<IActionResult> Update([FromRoute] Guid id, ArchitectRequest request)
         {
             var updatedArchitectModel = await architectService.UpdateAsync(id, request);
             return Ok(updatedArchitectModel);
