@@ -1,4 +1,5 @@
-﻿using HeatCalc.Domain.Dto.Request.Archive;
+﻿using HeatCalc.Domain.Dto.Request;
+using HeatCalc.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HeatCalcServer.Controllers
@@ -7,10 +8,18 @@ namespace HeatCalcServer.Controllers
     [ApiController]
     public class HeatCalcController : ControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> Create(ArchitectRequest request)
+        private readonly ArchitectService ArchitectService;
+
+        public HeatCalcController(ArchitectService architectService)
         {
-            return Ok();
+            ArchitectService = architectService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(BuildingRequest request)
+        {
+            var result = await ArchitectService.CreateAsync(request);
+            return Ok(result);
         }
 
         [HttpGet]
@@ -20,7 +29,7 @@ namespace HeatCalcServer.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromRoute] Guid id, ArchitectRequest request)
+        public async Task<IActionResult> Update([FromRoute] Guid id, BuildingRequest request)
         {
             return Ok();
         }

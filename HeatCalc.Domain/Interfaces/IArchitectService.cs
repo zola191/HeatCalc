@@ -1,13 +1,13 @@
-﻿using HeatCalc.Domain.Dto.Request.Archive;
+﻿using HeatCalc.Domain.Dto.Request;
 using HeatCalc.Domain.Dto.Response;
 
 namespace HeatCalc.Domain.Interfaces
 {
     public interface IArchitectService
     {
-        Task CreateAsync(ArchitectRequest request);
-        Task<ArchitectModel> GetByIdAsync(Guid id);
-        Task<ArchitectModel> UpdateAsync(Guid id, ArchitectRequest request);
+        Task<BuildingModel> CreateAsync(BuildingRequest request);
+        Task<BuildingModel> GetByIdAsync(Guid id);
+        Task<BuildingModel> UpdateAsync(Guid id, BuildingRequest request);
         Task SoftDeleteAsync(Guid id);
     }
 }

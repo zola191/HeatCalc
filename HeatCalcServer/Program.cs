@@ -1,6 +1,9 @@
+using FluentValidation;
 using HeatCalc.Data;
+using HeatCalc.Domain.Dto.Request;
 using HeatCalc.Domain.Interfaces;
 using HeatCalc.Domain.Services;
+using HeatCalcServer.Validators;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IValidator<BuildingRequest>, CreateBuildingRequestValidator>();
+builder.Services.AddScoped<IValidator<BuildingRequest>, CreateBuildingWithParkingRequestValidator>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

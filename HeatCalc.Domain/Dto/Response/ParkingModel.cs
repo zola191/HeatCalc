@@ -1,4 +1,5 @@
-﻿namespace HeatCalc.Domain.Dto.Response
+﻿
+namespace HeatCalc.Domain.Dto.Response
 {
     public class ParkingModel
     {
@@ -10,6 +11,9 @@
         public bool HasFirePumpStation { get; set; }
         public bool HasPumpStation { get; set; }
         public bool HasHeatingPoint { get; set; }
-        public int CountOfPeopleInShelter { get; set; }
+
+        public bool HasShelter { get; set; }
+        //public int NumberFireComaprtmentInParking { get; set; }
+        public int PeopleCountInShelter { get; set; }
     }
 }
