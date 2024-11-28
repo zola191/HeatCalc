@@ -16,16 +16,12 @@ namespace HeatCalc.Domain.Factories
                 CreatedDateUtc = building.CreatedDateUtc,
                 VolumeIncludingFirstFloor = building.VolumeIncludingFirstFloor,
                 Sections = building.Sections?.Select(CreateSectionModel).ToList() ?? new List<SectionModel>(),
-                IsHighRiseSection = building.IsHighRiseSection,
-                HighRiseSections = building.HighRiseSections?.Select(CreateHighRiseSectionModel).ToList() ?? new List<HighRiseSectionModel>(),
                 HasParking = building.HasParking,
                 CountOfExitGateInParking = building.CountOfExitGateInParking,
-                CountFireComaprtmentInParking = building.CountFireComaprtmentInParking,
-                IsIsolatedRamp = building.IsIsolatedRamp,
+                CountFireCompartmentInParking = building.CountFireCompartmentInParking,
+                IsRampIsolated = building.IsRampIsolated,
                 NumberOfIsolatedRampInFireComaprtment = building.NumberOfIsolatedRampInFireComaprtment,
                 Parkings = building.Parkings?.Select(CreateParkingModel).ToList() ?? new List<ParkingModel>(),
-                HasShelter = building.HasShelter,
-                Shelters = building.Shelters?.Select(CreateShelterModel).ToList() ?? new List<ShelterModel>(),
             };
         }
 
@@ -41,16 +37,12 @@ namespace HeatCalc.Domain.Factories
                 UpdatedDateUtc = building.UpdatedDateUtc,
                 VolumeIncludingFirstFloor = building.VolumeIncludingFirstFloor,
                 Sections = building.Sections?.Select(CreateSectionModel).ToList() ?? new List<SectionModel>(),
-                IsHighRiseSection = building.IsHighRiseSection,
-                HighRiseSections = building.HighRiseSections?.Select(CreateHighRiseSectionModel).ToList() ?? new List<HighRiseSectionModel>(),
                 HasParking = building.HasParking,
                 CountOfExitGateInParking = building.CountOfExitGateInParking,
-                CountFireComaprtmentInParking = building.CountFireComaprtmentInParking,
-                IsIsolatedRamp = building.IsIsolatedRamp,
+                CountFireCompartmentInParking = building.CountFireCompartmentInParking,
+                IsRampIsolated = building.IsRampIsolated,
                 NumberOfIsolatedRampInFireComaprtment = building.NumberOfIsolatedRampInFireComaprtment,
                 Parkings = building.Parkings?.Select(CreateParkingModel).ToList() ?? new List<ParkingModel>(),
-                HasShelter = building.HasShelter,
-                Shelters = building.Shelters?.Select(CreateShelterModel).ToList() ?? new List<ShelterModel>(),
             };
         }
 
@@ -71,11 +63,41 @@ namespace HeatCalc.Domain.Factories
                 CountOfFloorsOfTheLowerFireComaprtment = section.CountOfFloorsOfTheLowerFireComaprtment,
                 CountOfCorridorsTypicalFloor = section.CountOfCorridorsTypicalFloor,
                 CountOfFireproofZone = section.CountOfFireproofZone,
-                Corridors = section.Corridors?.Select(CreateCorridorModel).ToList() ?? new List<CorridorModel>(),
-                Staircases = section.Staircases.Select(CreateStaircaseModel).ToList() ?? new List<StaircaseModel>(),
-                Elevators = section.Elevators.Select(CreateElevatorModel).ToList() ?? new List<ElevatorModel>(),
+                Corridors = section.SectionCorridors.Select(sectionCorridor =>
+                {
+                    var corridor = sectionCorridor.Corridor;
+                    return new CorridorModel
+                    {
+                        IsConnectTypicalFloorWithFireGateway = corridor.IsConnectTypicalFloorWithFireGateway,
+                        IsConnectTypicalFloorWithFireProfZone = corridor.IsConnectTypicalFloorWithFireGateway
+                    };
+                }).ToList() ?? new List<CorridorModel>(),
+                Staircases = section.SectionStaircases.Select(sectionStaircase =>
+                {
+                    var staircase = sectionStaircase.Staircase;
+                    return new StaircaseModel
+                    {
+                        IsConnectTypicalFloorWithFireProfZone = staircase.IsConnectTypicalFloorWithFireProfZone,
+                        IsConnectTypicalFloorWithIndividualFireGateway = staircase.IsConnectTypicalFloorWithIndividualFireGateway,
+                        IsStructuralDivisionOfTheStaircase = staircase.IsStructuralDivisionOfTheStaircase,
+                        TypeOfTheStaircase = (TypeOfStaircaseModel)staircase.TypeOfTheStaircase
+                    };
+                }).ToList() ?? new List<StaircaseModel>(),
+                Elevators = section.SectionElevators.Select(sectionElevator =>
+                {
+                    var elevator = sectionElevator.Elevator;
+                    return new ElevatorModel
+                    {
+                        TypeOfElevator = (TypeOfElevatorModel) elevator.TypeOfElevator,
+                    };
+                }).ToList() ?? new List<ElevatorModel>(),
                 BasementFireCompartmentNumber = section.BasementFireCompartmentNumber,
-                HasPumpingStationInSectionFireComaprtment = section.HasPumpingStationInSectionFireComaprtment
+                HasPumpingStationInSectionFireComaprtment = section.HasPumpingStationInSectionFireComaprtment,
+
+                TotalAreaOfApartmentsAbove = section.TotalAreaOfApartmentsAbove,
+                IntermediateTechnicalFloorNumber = section.IntermediateTechnicalFloorNumber,
+                UpperFireCompartmentNumber = section.UpperFireCompartmentNumber,
+                CountOfFloorsOfFireComaprtment = section.CountOfFloorsOfFireComaprtment
             };
         }
 
@@ -107,38 +129,28 @@ namespace HeatCalc.Domain.Factories
             };
         }
 
-        private HighRiseSectionModel CreateHighRiseSectionModel(HighRiseSection highRiseSection)
-        {
-            return new HighRiseSectionModel
-            {
-                TotalAreaOfApartmentsAbove = highRiseSection.TotalAreaOfApartments,
-                IntermediateTechnicalFloorNumber = highRiseSection.IntermediateTechnicalFloorNumber,
-                UpperFireCompartmentNumber = highRiseSection.UpperFireCompartmentNumber,
-                CountOfFloorsOfFireComaprtment = highRiseSection.CountOfFloorsOfFireComaprtment
-            };
-        }
-
         private ParkingModel CreateParkingModel(Parking parking)
         {
             return new ParkingModel
             {
+                Number = parking.Number,
                 TotalAreaOfParking = parking.TotalAreaOfParking,
                 TotalParkingVoLume = parking.TotalParkingVoLume,
-                Elevators = parking.Elevators.Select(CreateElevatorModel).ToList() ?? new List<ElevatorModel>(),
+                Elevators = parking.ParkingElevators.Select(parkingElevator =>
+                {
+                    var elevator = parkingElevator.Elevator;
+                    return new ElevatorModel
+                    {
+                        TypeOfElevator = (TypeOfElevatorModel) elevator.TypeOfElevator,
+                    };
+                }).ToList() ?? new List<ElevatorModel>(),
                 CountOfFireproofZone = parking.CountOfFireproofZone,
                 CountOfFireGateway = parking.CountOfFireGateway,
                 HasFirePumpStation = parking.HasFirePumpStation,
                 HasPumpStation = parking.HasPumpStation,
-                HasHeatingPoint = parking.HasHeatingPoint
-            };
-        }
-
-        private ShelterModel CreateShelterModel(Shelter shelter)
-        {
-            return new ShelterModel
-            {
-                NumberFireComaprtmentInParking = shelter.NumberFireComaprtmentInParking,
-                PeopleCountInShelter = shelter.PeopleCountInShelter
+                HasHeatingPoint = parking.HasHeatingPoint,
+                HasShelter = parking.HasShelter,
+                PeopleCountInShelter = parking.PeopleCountInShelter
             };
         }
     }

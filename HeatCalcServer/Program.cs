@@ -1,6 +1,7 @@
 using FluentValidation;
 using HeatCalc.Data;
 using HeatCalc.Domain.Dto.Request;
+using HeatCalc.Domain.Factories;
 using HeatCalc.Domain.Interfaces;
 using HeatCalc.Domain.Services;
 using HeatCalcServer.Validators;
@@ -18,7 +19,9 @@ builder.Services.AddScoped<IValidator<BuildingRequest>, CreateBuildingWithParkin
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<IArchitectService, ArchitectService>();
+builder.Services.AddScoped<IArchitectService, ArchitectService>();
+builder.Services.AddSingleton<BuildingFactory>();
+builder.Services.AddSingleton<BuildingResponseFactory>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {

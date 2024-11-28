@@ -1,4 +1,6 @@
-﻿namespace HeatCalc.Data.Models.Heat
+﻿using HeatCalc.Data.Models.Architect;
+
+namespace HeatCalc.Data.Models.Heat
 {
     public class Heat
     {
@@ -13,6 +15,6 @@
         //в зависимости от площади АР может быть 67 или 77
         public bool ElectricHeating { get; set; }
 
-
+        public Building Building { get; set; }
     }
 }

@@ -3,6 +3,7 @@ namespace HeatCalc.Domain.Dto.Response
 {
     public class ParkingModel
     {
+        public int Number { get; set; }
         public double TotalAreaOfParking { get; set; }
         public double TotalParkingVoLume { get; set; }
         public List<ElevatorModel> Elevators { get; set; }
@@ -13,7 +14,6 @@ namespace HeatCalc.Domain.Dto.Response
         public bool HasHeatingPoint { get; set; }
 
         public bool HasShelter { get; set; }
-        //public int NumberFireComaprtmentInParking { get; set; }
         public int PeopleCountInShelter { get; set; }
     }
 }

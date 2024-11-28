@@ -2,6 +2,10 @@
 {
     public class Parking
     {
+        public Guid Id { get; set; }
+        public Guid BuildingId { get; set; }
+        public Building Building { get; set; }
+        public int Number { get; set; }
         /// <summary>
         /// Площадь всех помещений автостоянки и рампы (если есть) 
         /// в пределах пожарного отсека в том числе технических кроме ИТП, м2
@@ -14,7 +18,7 @@
         /// <summary>
         /// Количество лифтов с режимом "Перевозка пожарных подразделений" с опуском в пожарный отсек стоянки
         /// </summary>
-        public List<Elevator> Elevators { get; set; }
+        public List<ParkingElevator> ParkingElevators { get; set; }
         /// <summary>
         /// количество пожаробезопасных зон
         /// </summary>

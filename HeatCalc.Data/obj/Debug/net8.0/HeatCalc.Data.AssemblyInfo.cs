@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HeatCalc.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4df2f415c6d7a57ddd3ef863cd18ec63acb50d35")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a5ed29d4e1c56c71398f21f0305900549b6f9b0")]
 [assembly: System.Reflection.AssemblyProductAttribute("HeatCalc.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HeatCalc.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

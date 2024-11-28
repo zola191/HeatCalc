@@ -77,12 +77,12 @@ namespace HeatCalcServer.Validators
                         " площадь квартир каждого пож отсека, количество этажей пожарного отсека");
                 });
 
-            RuleForEach(f => new[] { f.CountOfExitGateInParking, f.CountFireComaprtmentInParking, f.NumberOfIsolatedRampInFireComaprtment })
+            RuleForEach(f => new[] { f.CountOfExitGateInParking, f.CountFireCompartmentInParking, f.NumberOfIsolatedRampInFireComaprtment })
                 .NotEmpty()
                 .When(f => f.HasParking)
                 .WithMessage("Когда паркинг указан, все поля должны быть заполнены.");
 
-            RuleFor(f => f.IsIsolatedRamp)
+            RuleFor(f => f.IsRampIsolated)
                 .NotNull()
                 .WithMessage("IsIsolatedRamp должно быть указано.")
                 .Must(value => value == true || value == false)

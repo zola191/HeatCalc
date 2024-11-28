@@ -13,7 +13,6 @@
         public bool HasHeatingPoint { get; set; }
 
         public bool HasShelter { get; set; }
-        //public int NumberFireComaprtmentInParking { get; set; }
         public int PeopleCountInShelter { get; set; }
     }
 }

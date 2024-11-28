@@ -13,19 +13,8 @@ namespace HeatCalc.Data.Models.Architect
         /// общий объем пожарного отсека секции включая первый этаж
         /// </summary>
         public double VolumeIncludingFirstFloor { get; set; }
-        public List<Section> Sections { get; set; }
+        public List<Section> Sections { get; set; } = new List<Section>();
         
-        /*
-        /// <summary>
-        /// Высотная секция?
-        /// </summary>
-        public bool IsHighRiseSection { get; set; }
-        /// <summary>
-        /// Данные по высотной секции
-        /// </summary>
-        public List<HighRiseSection>? HighRiseSections { get; set; }
-        */
-
         /// <summary>
         /// Наличие автостоянки
         /// </summary>
@@ -37,11 +26,11 @@ namespace HeatCalc.Data.Models.Architect
         /// <summary>
         /// Количество пожарных отсеков в автостоянке
         /// </summary>
-        public int? CountFireComaprtmentInParking { get; set; }
+        public int? CountFireCompartmentInParking { get; set; }
         /// <summary>
         /// Наличие изолированной рампы в автостоянке
         /// </summary>
-        public bool? IsIsolatedRamp { get; set; }
+        public bool? IsRampIsolated { get; set; }
         /// <summary>
         /// В каком пожарном отсеке рампа
         /// </summary>
@@ -51,20 +40,10 @@ namespace HeatCalc.Data.Models.Architect
         /// </summary>
         public List<Parking>? Parkings { get; set; }
 
-        /*
-        /// <summary>
-        /// Наличие укрытия в автостоянке
-        /// </summary>
-        public bool HasShelter { get; set; }
-        /// <summary>
-        /// Деление укрытия по пожарным отсекам
-        /// </summary>
-        public List<Shelter>? Shelters { get; set; }
-        /// <summary>
-        /// Для отправки в архив старой версии
-        /// </summary>
-        */
-
         public bool IsDeleted { get; set; }
+
+        public Guid HeatId { get; set; }
+
+        public Heat.Heat Heat { get; set; }
     }
 }

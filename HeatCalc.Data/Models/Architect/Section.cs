@@ -2,6 +2,9 @@
 {
     public class Section
     {
+        public Guid Id { get; set; }
+        public Guid BuildingId { get; set; }
+        public Building Building { get; set; }
         public int Number { get; set; }
         /// <summary>
         /// Общая площадь квартир секции 2-24 этажа
@@ -51,9 +54,6 @@
         /// количество пожаробезопасных зон
         /// </summary>
         public int CountOfFireproofZone { get; set; }
-        public List<Corridor> Corridors { get; set; }
-        public List<Staircase> Staircases { get; set; }
-        public List<Elevator> Elevators { get; set; }
         /// <summary>
         /// номер пож.отсека, в котором расположен подвал секции
         /// </summary>
@@ -71,7 +71,7 @@
         /// <summary>
         /// Общая площадь квартир пожарного отсека секции
         /// </summary>
-        public double TotalAreaOfApartments { get; set; }
+        public double TotalAreaOfApartmentsAbove { get; set; }
         /// <summary>
         /// номер этажа на котором устроен промежуточный этаж
         /// </summary>
@@ -84,5 +84,9 @@
         /// количество этажей пожарного отсека
         /// </summary>
         public int CountOfFloorsOfFireComaprtment { get; set; }
+
+        public List<SectionCorridor> SectionCorridors { get; set; }
+        public List<SectionElevator> SectionElevators { get; set; }
+        public List<SectionStaircase> SectionStaircases { get; set; }
     }
 }

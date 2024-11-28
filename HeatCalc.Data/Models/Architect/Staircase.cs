@@ -4,6 +4,7 @@ namespace HeatCalc.Data.Models.Architect
 {
     public class Staircase
     {
+        public Guid Id { get; set; }
         public TypeOfStaircase TypeOfTheStaircase { get; set; }
         /// <summary>
         /// Сообщение лестницы с индивидуальными тамбур-шлюзами
@@ -17,5 +18,6 @@ namespace HeatCalc.Data.Models.Architect
         /// Конструктивное разделение лестничной клетки для высотного здания
         /// </summary>
         public bool IsStructuralDivisionOfTheStaircase { get; set; }
+        public List<SectionStaircase> SectionStaircases { get; set; }
     }
 }

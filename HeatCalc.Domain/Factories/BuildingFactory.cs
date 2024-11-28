@@ -1,55 +1,63 @@
-﻿using HeatCalc.Data.Enums;
+﻿using HeatCalc.Data;
+using HeatCalc.Data.Enums;
 using HeatCalc.Data.Models.Architect;
 using HeatCalc.Domain.Dto.Request;
+using Microsoft.EntityFrameworkCore;
 
 namespace HeatCalc.Domain.Factories
 {
     public class BuildingFactory
     {
-        public Building CreateBuilding(BuildingRequest request)
+        private readonly ApplicationDbContext _dbContext;
+
+        public BuildingFactory(ApplicationDbContext dbContext)
         {
+            _dbContext = dbContext;
+        }
+        public async Task<Building> CreateBuildingAsync(BuildingRequest request)
+        {
+            var allStaircases = await _dbContext.Staircases.ToListAsync();
+            var allElevators = await _dbContext.Elevators.ToListAsync();
+
             return new Building()
             {
                 BuildingType = (BuildingType)request.BuildingType,
                 Name = request.Name,
                 CreatedDateUtc = DateTime.UtcNow,
                 VolumeIncludingFirstFloor = request.VolumeIncludingFirstFloor,
-                Sections = request.Sections?.Select(CreateSection).ToList() ?? new List<Section>(),
-                IsHighRiseSection = request.IsHighRiseSection,
-                HighRiseSections = request.HighRiseSections?.Select(CreateHighRiseSection).ToList() ?? new List<HighRiseSection>(),
+                Sections = request.Sections != null
+                ? request.Sections.Select(section => CreateSection(section, allStaircases, allElevators)).ToList()
+                : new List<Section>(),
                 HasParking = request.HasParking,
                 CountOfExitGateInParking = request.CountOfExitGateInParking,
-                CountFireComaprtmentInParking = request.CountFireComaprtmentInParking,
-                IsIsolatedRamp = request.IsIsolatedRamp,
+                CountFireCompartmentInParking = request.CountFireCompartmentInParking,
+                IsRampIsolated = request.IsRampIsolated,
                 NumberOfIsolatedRampInFireComaprtment = request.NumberOfIsolatedRampInFireComaprtment,
                 Parkings = request.Parkings?.Select(CreateParking).ToList() ?? new List<Parking>(),
-                HasShelter = request.HasShelter,
-                Shelters = request.Shelters?.Select(CreateShelter).ToList() ?? new List<Shelter>(),
             };
         }
 
-        public Building UpdateBuilding(BuildingRequest request, Building existingBuilding)
+        public async Task<Building> UpdateBuildingAsync(BuildingRequest request, Building existingBuilding)
         {
+            var allStaircases = await _dbContext.Staircases.ToListAsync();
+            var allElevators = await _dbContext.Elevators.ToListAsync();
+
             existingBuilding.BuildingType = (BuildingType)request.BuildingType;
             existingBuilding.Name = request.Name;
             existingBuilding.UpdatedDateUtc = DateTime.UtcNow;
             existingBuilding.VolumeIncludingFirstFloor = request.VolumeIncludingFirstFloor;
-            existingBuilding.Sections = request.Sections?.Select(CreateSection).ToList() ?? new List<Section>();
-            existingBuilding.IsHighRiseSection = request.IsHighRiseSection;
-            existingBuilding.HighRiseSections = request.HighRiseSections?.Select(CreateHighRiseSection).ToList() ?? new List<HighRiseSection>();
+            existingBuilding.Sections = request.Sections.Select(section => CreateSection(section, allStaircases, allElevators)).ToList();
             existingBuilding.HasParking = request.HasParking;
             existingBuilding.CountOfExitGateInParking = request.CountOfExitGateInParking;
-            existingBuilding.CountFireComaprtmentInParking = request.CountFireComaprtmentInParking;
-            existingBuilding.IsIsolatedRamp = request.IsIsolatedRamp;
+            existingBuilding.CountFireCompartmentInParking = request.CountFireCompartmentInParking;
+            existingBuilding.IsRampIsolated = request.IsRampIsolated;
             existingBuilding.NumberOfIsolatedRampInFireComaprtment = request.NumberOfIsolatedRampInFireComaprtment;
             existingBuilding.Parkings = request.Parkings?.Select(CreateParking).ToList() ?? new List<Parking>();
-            existingBuilding.HasShelter = request.HasShelter;
-            existingBuilding.Shelters = request.Shelters?.Select(CreateShelter).ToList() ?? new List<Shelter>();
 
             return existingBuilding;
         }
 
-        private Section CreateSection(SectionRequest sectionRequest)
+        private Section CreateSection(SectionRequest sectionRequest, List<Staircase> allStaircases, List<Elevator> allElevators)
         {
             return new Section
             {
@@ -66,11 +74,40 @@ namespace HeatCalc.Domain.Factories
                 CountOfFloorsOfTheLowerFireComaprtment = sectionRequest.CountOfFloorsOfTheLowerFireComaprtment,
                 CountOfCorridorsTypicalFloor = sectionRequest.CountOfCorridorsTypicalFloor,
                 CountOfFireproofZone = sectionRequest.CountOfFireproofZone,
-                Corridors = sectionRequest.Corridors?.Select(CreateCorridor).ToList() ?? new List<Corridor>(),
-                Staircases = sectionRequest.Staircases.Select(CreateStaircase).ToList() ?? new List<Staircase>(),
-                Elevators = sectionRequest.Elevators.Select(CreateElevator).ToList() ?? new List<Elevator>(),
+                SectionCorridors = sectionRequest.Corridors?.Select(corridorRequest =>
+                new SectionCorridor
+                {
+                    Corridor = new Corridor
+                    {
+                        IsConnectTypicalFloorWithFireGateway = corridorRequest.IsConnectTypicalFloorWithFireGateway,
+                        IsConnectTypicalFloorWithFireProfZone = corridorRequest.IsConnectTypicalFloorWithFireProfZone,
+                    }
+                }).ToList() ?? new List<SectionCorridor>(),
+                SectionElevators = sectionRequest.Elevators?.Select(elevatorRequest =>
+                {
+                    var elevator = allElevators.FirstOrDefault(f => f.TypeOfElevator == (TypeOfElevator)elevatorRequest.TypeOfElevator);
+                    if (elevator == null)
+                    {
+                        throw new InvalidOperationException($"Тип ЛИФТА не найден: {elevatorRequest.TypeOfElevator}");
+                    }
+                    return new SectionElevator { Elevator = elevator };
+                }).ToList() ?? new List<SectionElevator>(),
+                SectionStaircases = sectionRequest.Staircases?.Select(sectionStaircase => new SectionStaircase
+                {
+                    Staircase = new Staircase
+                    {
+                        IsConnectTypicalFloorWithFireProfZone = sectionStaircase.IsConnectTypicalFloorWithFireProfZone,
+                        IsConnectTypicalFloorWithIndividualFireGateway = sectionStaircase.IsConnectTypicalFloorWithIndividualFireGateway,
+                        IsStructuralDivisionOfTheStaircase = sectionStaircase.IsStructuralDivisionOfTheStaircase,
+                        TypeOfTheStaircase = (TypeOfStaircase)sectionStaircase.TypeOfTheStaircase,
+                    }
+                }).ToList() ?? new List<SectionStaircase>(),
                 BasementFireCompartmentNumber = sectionRequest.BasementFireCompartmentNumber,
-                HasPumpingStationInSectionFireComaprtment = sectionRequest.HasPumpingStationInSectionFireComaprtment
+                HasPumpingStationInSectionFireComaprtment = sectionRequest.HasPumpingStationInSectionFireComaprtment,
+                TotalAreaOfApartmentsAbove = sectionRequest.TotalAreaOfApartmentsAbove ?? 0.0,
+                IntermediateTechnicalFloorNumber = sectionRequest.IntermediateTechnicalFloorNumber ?? 0,
+                UpperFireCompartmentNumber = sectionRequest.UpperFireCompartmentNumber ?? 0,
+                CountOfFloorsOfFireComaprtment = sectionRequest.CountOfFloorsOfFireComaprtment ?? 0
             };
         }
 
@@ -102,40 +139,25 @@ namespace HeatCalc.Domain.Factories
             };
         }
 
-        private HighRiseSection CreateHighRiseSection(HighRiseSectionRequest highRiseSectionRequest)
-        {
-            return new HighRiseSection
-            {
-                TotalAreaOfApartments = highRiseSectionRequest.TotalAreaOfApartments,
-                IntermediateTechnicalFloorNumber = highRiseSectionRequest.IntermediateTechnicalFloorNumber,
-                UpperFireCompartmentNumber = highRiseSectionRequest.UpperFireCompartmentNumber,
-                CountOfFloorsOfFireComaprtment = highRiseSectionRequest.CountOfFloorsOfFireComaprtment
-            };
-        }
-
         private Parking CreateParking(ParkingRequest parkingRequest)
         {
             return new Parking
             {
+                Number = parkingRequest.Number,
                 TotalAreaOfParking = parkingRequest.TotalAreaOfParking,
                 TotalParkingVoLume = parkingRequest.TotalParkingVolume,
-                Elevators = parkingRequest.Elevators.Select(CreateElevator).ToList() ?? new List<Elevator>(),
+                ParkingElevators = parkingRequest.Elevators.Select(elevatorRequest => new ParkingElevator
+                {
+                    Elevator = CreateElevator(elevatorRequest)
+                }).ToList() ?? new List<ParkingElevator>(),
                 CountOfFireproofZone = parkingRequest.CountOfFireproofZone,
                 CountOfFireGateway = parkingRequest.CountOfFireGateway,
                 HasFirePumpStation = parkingRequest.HasFirePumpStation,
                 HasPumpStation = parkingRequest.HasPumpStation,
-                HasHeatingPoint = parkingRequest.HasHeatingPoint
+                HasHeatingPoint = parkingRequest.HasHeatingPoint,
+                HasShelter = parkingRequest.HasShelter,
+                PeopleCountInShelter = parkingRequest.PeopleCountInShelter
             };
         }
-
-        private Shelter CreateShelter(ShelterRequest shelterRequest)
-        {
-            return new Shelter
-            {
-                NumberFireComaprtmentInParking = shelterRequest.NumberFireComaprtmentInParking,
-                PeopleCountInShelter = shelterRequest.PeopleCountInShelter
-            };
-        }
-
     }
 }
