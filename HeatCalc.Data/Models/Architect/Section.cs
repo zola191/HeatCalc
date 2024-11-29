@@ -89,8 +89,5 @@
         public List<Elevator> Elevators { get; set; }
         public List<Staircase> Staircases { get; set; }
 
-        //public List<SectionCorridor> SectionCorridors { get; set; }
-        //public List<SectionElevator> SectionElevators { get; set; }
-        //public List<SectionStaircase> SectionStaircases { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using HeatCalc.Data.Enums;
-using HeatCalc.Data.Models;
 using HeatCalc.Data.Models.Architect;
 using HeatCalc.Domain.Dto.Request;
 
@@ -64,34 +63,6 @@ namespace HeatCalc.Domain.Factories
                 Corridors = sectionRequest.Corridors.Select(CreateCorridor).ToList(),
                 Elevators = sectionRequest.Elevators.Select(CreateElevator).ToList(),
                 Staircases = sectionRequest.Staircases.Select(CreateStaircase).ToList(),
-                //SectionCorridors = sectionRequest.Corridors?.Select(corridorRequest =>
-                //new SectionCorridor
-                //{
-                //    Corridor = new Corridor
-                //    {
-                //        IsConnectTypicalFloorWithFireGateway = corridorRequest.IsConnectTypicalFloorWithFireGateway,
-                //        IsConnectTypicalFloorWithFireProfZone = corridorRequest.IsConnectTypicalFloorWithFireProfZone,
-                //    }
-                //}).ToList() ?? new List<SectionCorridor>(),
-                //SectionElevators = sectionRequest.Elevators?.Select(elevatorRequest =>
-                //{
-                //    var elevator = ElevatorData.Elevators.FirstOrDefault(f => f.TypeOfElevator == (TypeOfElevator)elevatorRequest.TypeOfElevator);
-                //    if (elevator == null)
-                //    {
-                //        throw new InvalidOperationException($"Тип ЛИФТА не найден: {elevatorRequest.TypeOfElevator}");
-                //    }
-                //    return new SectionElevator { Elevator = elevator };
-                //}).ToList() ?? new List<SectionElevator>(),
-                //SectionStaircases = sectionRequest.Staircases?.Select(sectionStaircase => new SectionStaircase
-                //{
-                //    Staircase = new Staircase
-                //    {
-                //        IsConnectTypicalFloorWithFireProfZone = sectionStaircase.IsConnectTypicalFloorWithFireProfZone,
-                //        IsConnectTypicalFloorWithIndividualFireGateway = sectionStaircase.IsConnectTypicalFloorWithIndividualFireGateway,
-                //        IsStructuralDivisionOfTheStaircase = sectionStaircase.IsStructuralDivisionOfTheStaircase,
-                //        TypeOfTheStaircase = (TypeOfStaircase)sectionStaircase.TypeOfTheStaircase,
-                //    }
-                //}).ToList() ?? new List<SectionStaircase>(),
                 BasementFireCompartmentNumber = sectionRequest.BasementFireCompartmentNumber,
                 HasPumpingStationInSectionFireComaprtment = sectionRequest.HasPumpingStationInSectionFireComaprtment,
                 TotalAreaOfApartmentsAbove = sectionRequest.TotalAreaOfApartmentsAbove ?? 0.0,
@@ -137,10 +108,6 @@ namespace HeatCalc.Domain.Factories
                 TotalAreaOfParking = parkingRequest.TotalAreaOfParking,
                 TotalParkingVoLume = parkingRequest.TotalParkingVolume,
                 Elevators = parkingRequest.Elevators.Select(CreateElevator).ToList(),
-                //ParkingElevators = parkingRequest.Elevators.Select(elevatorRequest => new ParkingElevator
-                //{
-                //    Elevator = CreateElevator(elevatorRequest)
-                //}).ToList() ?? new List<ParkingElevator>(),
                 CountOfFireproofZone = parkingRequest.CountOfFireproofZone,
                 CountOfFireGateway = parkingRequest.CountOfFireGateway,
                 HasFirePumpStation = parkingRequest.HasFirePumpStation,

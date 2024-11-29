@@ -9,6 +9,5 @@
         public bool IsConnectTypicalFloorWithFireProfZone { get; set; }
 
         public List<Section> Sections { get; set; }
-        //public List<SectionCorridor> SectionCorridors { get; set; }
     }
 }

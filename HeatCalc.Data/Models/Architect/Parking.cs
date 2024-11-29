@@ -18,10 +18,6 @@ namespace HeatCalc.Data.Models.Architect
         /// </summary>
         public double TotalParkingVoLume { get; set; }
         /// <summary>
-        /// Количество лифтов с режимом "Перевозка пожарных подразделений" с опуском в пожарный отсек стоянки
-        /// </summary>
-        //public List<ParkingElevator> ParkingElevators { get; set; }
-        /// <summary>
         /// количество пожаробезопасных зон
         /// </summary>
         public int CountOfFireproofZone { get; set; }

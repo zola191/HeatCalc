@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HeatCalcServer.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class HeatCalcController : ControllerBase
     {
         private readonly ArchitectService ArchitectService;
