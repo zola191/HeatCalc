@@ -20,8 +20,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IArchitectService, ArchitectService>();
-builder.Services.AddSingleton<BuildingFactory>();
-builder.Services.AddSingleton<BuildingResponseFactory>();
+builder.Services.AddScoped<BuildingFactory>();
+builder.Services.AddScoped<BuildingResponseFactory>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {

@@ -1,4 +1,6 @@
-﻿namespace HeatCalc.Data.Models.Architect
+﻿using HeatCalc.Data.Enums;
+
+namespace HeatCalc.Data.Models.Architect
 {
     public class Parking
     {
@@ -18,7 +20,7 @@
         /// <summary>
         /// Количество лифтов с режимом "Перевозка пожарных подразделений" с опуском в пожарный отсек стоянки
         /// </summary>
-        public List<ParkingElevator> ParkingElevators { get; set; }
+        //public List<ParkingElevator> ParkingElevators { get; set; }
         /// <summary>
         /// количество пожаробезопасных зон
         /// </summary>
@@ -48,5 +50,6 @@
         /// Количество людей в укрытии
         /// </summary>
         public int PeopleCountInShelter { get; set; }
+        public List<Elevator> Elevators { get; set; }
     }
 }

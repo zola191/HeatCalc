@@ -5,7 +5,7 @@ using HeatCalcServer.Validators;
 
 namespace HeatCalcServer
 {
-    public class BuildingValidatorFactory : IBuildingValidatorFactory
+    public class BuildingValidatorFactory : IBuildingValidationFactory
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -25,7 +25,7 @@ namespace HeatCalcServer
 
             if (validator == null)
             {
-                throw new InvalidOperationException($"Валидаор {buildingType} не найден.");
+                throw new InvalidOperationException($"Валидатор {buildingType} не найден.");
             }
 
             return validator;

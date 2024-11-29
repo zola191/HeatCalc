@@ -1,28 +1,28 @@
-﻿using HeatCalc.Domain.Dto.Request;
+﻿using FluentValidation;
+using HeatCalc.Domain.Dto.Request;
 using HeatCalc.Domain.Interfaces;
+using HeatCalcServer.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HeatCalcServer.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ArchitectController : ControllerBase
     {
         private readonly IArchitectService architectService;
-        private readonly IBuildingValidatorFactory validatorFactory;
+        private readonly IValidator<BuildingRequest> buildingRequest;
 
-        public ArchitectController(IArchitectService architectService,
-            IBuildingValidatorFactory validatorFactory)
+        public ArchitectController(IArchitectService architectService, IValidator<BuildingRequest> buildingRequest)
         {
             this.architectService = architectService;
-            this.validatorFactory = validatorFactory;
+            this.buildingRequest = buildingRequest;
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(BuildingRequest request)
         {
-            var validator = validatorFactory.GetValidator(request.BuildingType);
-            var result = await validator.ValidateAsync(request);
+            var result = buildingRequest.Validate(request);
 
             if (!result.IsValid)
             {

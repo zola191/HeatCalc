@@ -13,7 +13,7 @@ namespace HeatCalc.Domain.Services
         private readonly BuildingResponseFactory _buildingResponseFactory;
         private readonly ApplicationDbContext _dbContext;
 
-        public ArchitectService(ApplicationDbContext dbContext, BuildingResponseFactory buildingResponseFactory, 
+        public ArchitectService(ApplicationDbContext dbContext, BuildingResponseFactory buildingResponseFactory,
             BuildingFactory buildingFactory)
         {
             _dbContext = dbContext;
@@ -23,7 +23,7 @@ namespace HeatCalc.Domain.Services
 
         public async Task<BuildingModel> CreateAsync(BuildingRequest request)
         {
-            var building = _buildingFactory.CreateBuildingAsync(request);
+            var building = _buildingFactory.CreateBuilding(request);
 
             await _dbContext.Buildings.AddAsync(building);
             await _dbContext.SaveChangesAsync();
@@ -59,7 +59,7 @@ namespace HeatCalc.Domain.Services
             var existingBuilding = await _dbContext.Buildings.FirstOrDefaultAsync(f => f.Id == id);
             if (existingBuilding != null)
             {
-                _buildingFactory.UpdateBuildingAsync(request, existingBuilding);
+                _buildingFactory.UpdateBuilding(request, existingBuilding);
                 await _dbContext.SaveChangesAsync();
 
                 return _buildingResponseFactory.UpdateBuildingModel(existingBuilding);

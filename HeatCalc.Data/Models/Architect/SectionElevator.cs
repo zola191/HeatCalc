@@ -10,6 +10,6 @@ namespace HeatCalc.Data.Models.Architect
         public TypeOfElevator ElevatorId { get; set; }
         public Elevator Elevator { get; set; }
 
-        public List<SectionElevator> SectionElevators { get; set; }
+        //public List<SectionElevator> SectionElevators { get; set; }
     }
 }

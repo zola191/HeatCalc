@@ -4,7 +4,7 @@ using HeatCalc.Domain.Dto.Request;
 
 namespace HeatCalcServer
 {
-    public interface IBuildingValidatorFactory
+    public interface IBuildingValidationFactory
     {
         IValidator<BuildingRequest> GetValidator(BuildingTypeModel buildingType);
     }

@@ -18,6 +18,7 @@ namespace HeatCalc.Data.Models.Architect
         /// Конструктивное разделение лестничной клетки для высотного здания
         /// </summary>
         public bool IsStructuralDivisionOfTheStaircase { get; set; }
-        public List<SectionStaircase> SectionStaircases { get; set; }
+        //public List<SectionStaircase> SectionStaircases { get; set; }
+        public List<Section> Sections { get; set; }
     }
 }

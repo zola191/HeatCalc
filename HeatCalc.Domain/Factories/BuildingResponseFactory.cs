@@ -63,34 +63,37 @@ namespace HeatCalc.Domain.Factories
                 CountOfFloorsOfTheLowerFireComaprtment = section.CountOfFloorsOfTheLowerFireComaprtment,
                 CountOfCorridorsTypicalFloor = section.CountOfCorridorsTypicalFloor,
                 CountOfFireproofZone = section.CountOfFireproofZone,
-                Corridors = section.SectionCorridors.Select(sectionCorridor =>
-                {
-                    var corridor = sectionCorridor.Corridor;
-                    return new CorridorModel
-                    {
-                        IsConnectTypicalFloorWithFireGateway = corridor.IsConnectTypicalFloorWithFireGateway,
-                        IsConnectTypicalFloorWithFireProfZone = corridor.IsConnectTypicalFloorWithFireGateway
-                    };
-                }).ToList() ?? new List<CorridorModel>(),
-                Staircases = section.SectionStaircases.Select(sectionStaircase =>
-                {
-                    var staircase = sectionStaircase.Staircase;
-                    return new StaircaseModel
-                    {
-                        IsConnectTypicalFloorWithFireProfZone = staircase.IsConnectTypicalFloorWithFireProfZone,
-                        IsConnectTypicalFloorWithIndividualFireGateway = staircase.IsConnectTypicalFloorWithIndividualFireGateway,
-                        IsStructuralDivisionOfTheStaircase = staircase.IsStructuralDivisionOfTheStaircase,
-                        TypeOfTheStaircase = (TypeOfStaircaseModel)staircase.TypeOfTheStaircase
-                    };
-                }).ToList() ?? new List<StaircaseModel>(),
-                Elevators = section.SectionElevators.Select(sectionElevator =>
-                {
-                    var elevator = sectionElevator.Elevator;
-                    return new ElevatorModel
-                    {
-                        TypeOfElevator = (TypeOfElevatorModel) elevator.TypeOfElevator,
-                    };
-                }).ToList() ?? new List<ElevatorModel>(),
+                Corridors = section.Corridors.Select(CreateCorridorModel).ToList(),
+                Elevators = section.Elevators.Select(CreateElevatorModel).ToList(),
+                Staircases = section.Staircases.Select(CreateStaircaseModel).ToList(),
+                //Corridors = section.SectionCorridors.Select(sectionCorridor =>
+                //{
+                //    var corridor = sectionCorridor.Corridor;
+                //    return new CorridorModel
+                //    {
+                //        IsConnectTypicalFloorWithFireGateway = corridor.IsConnectTypicalFloorWithFireGateway,
+                //        IsConnectTypicalFloorWithFireProfZone = corridor.IsConnectTypicalFloorWithFireGateway
+                //    };
+                //}).ToList() ?? new List<CorridorModel>(),
+                //Staircases = section.SectionStaircases.Select(sectionStaircase =>
+                //{
+                //    var staircase = sectionStaircase.Staircase;
+                //    return new StaircaseModel
+                //    {
+                //        IsConnectTypicalFloorWithFireProfZone = staircase.IsConnectTypicalFloorWithFireProfZone,
+                //        IsConnectTypicalFloorWithIndividualFireGateway = staircase.IsConnectTypicalFloorWithIndividualFireGateway,
+                //        IsStructuralDivisionOfTheStaircase = staircase.IsStructuralDivisionOfTheStaircase,
+                //        TypeOfTheStaircase = (TypeOfStaircaseModel)staircase.TypeOfTheStaircase
+                //    };
+                //}).ToList() ?? new List<StaircaseModel>(),
+                //Elevators = section.SectionElevators.Select(sectionElevator =>
+                //{
+                //    var elevator = sectionElevator.Elevator;
+                //    return new ElevatorModel
+                //    {
+                //        TypeOfElevator = (TypeOfElevatorModel) elevator.TypeOfElevator,
+                //    };
+                //}).ToList() ?? new List<ElevatorModel>(),
                 BasementFireCompartmentNumber = section.BasementFireCompartmentNumber,
                 HasPumpingStationInSectionFireComaprtment = section.HasPumpingStationInSectionFireComaprtment,
 
@@ -136,14 +139,15 @@ namespace HeatCalc.Domain.Factories
                 Number = parking.Number,
                 TotalAreaOfParking = parking.TotalAreaOfParking,
                 TotalParkingVoLume = parking.TotalParkingVoLume,
-                Elevators = parking.ParkingElevators.Select(parkingElevator =>
-                {
-                    var elevator = parkingElevator.Elevator;
-                    return new ElevatorModel
-                    {
-                        TypeOfElevator = (TypeOfElevatorModel) elevator.TypeOfElevator,
-                    };
-                }).ToList() ?? new List<ElevatorModel>(),
+                Elevators = parking.Elevators.Select(CreateElevatorModel).ToList(),
+                //Elevators = parking.ParkingElevators.Select(parkingElevator =>
+                //{
+                //    var elevator = parkingElevator.Elevator;
+                //    return new ElevatorModel
+                //    {
+                //        TypeOfElevator = (TypeOfElevatorModel) elevator.TypeOfElevator,
+                //    };
+                //}).ToList() ?? new List<ElevatorModel>(),
                 CountOfFireproofZone = parking.CountOfFireproofZone,
                 CountOfFireGateway = parking.CountOfFireGateway,
                 HasFirePumpStation = parking.HasFirePumpStation,
